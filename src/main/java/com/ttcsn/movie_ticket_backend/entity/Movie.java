@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Table(name = "movies")
@@ -19,35 +18,39 @@ import java.util.UUID;
 public class Movie {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "movie_id")
+    private Integer movieId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 255)
     private String title;
 
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "duration_minutes", nullable = false)
-    private Integer durationMinutes;
+    @Column(name = "duration_minutes")
+    private Short durationMinutes;
 
+    @Column(length = 255)
     private String genre;
+
+    @Column(length = 255)
+    private String language;
 
     @Column(name = "release_date")
     private LocalDate releaseDate;
 
-    @Column(name = "poster_url")
+    @Column(name = "poster_url", columnDefinition = "TEXT")
     private String posterUrl;
 
-    @Column(name = "trailer_url")
+    @Column(name = "trailer_url", columnDefinition = "TEXT")
     private String trailerUrl;
 
-    @Column(name = "age_rating")
-    private String ageRating;
+    @Column(name = "age_restriction", length = 10)
+    private String ageRestriction;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Status status;
+    @Column(length = 50)
+    private String status;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -64,9 +67,5 @@ public class Movie {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
-    }
-
-    public enum Status {
-        COMING_SOON, NOW_SHOWING, ENDED
     }
 }

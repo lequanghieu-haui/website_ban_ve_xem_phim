@@ -8,12 +8,11 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Table(
     name = "booking_details",
-    uniqueConstraints = @UniqueConstraint(columnNames = {"showtime_id", "seat_id"})
+    uniqueConstraints = @UniqueConstraint(columnNames = {"booking_id", "seat_id"})
 )
 @Data
 @NoArgsConstructor
@@ -22,16 +21,13 @@ import java.util.UUID;
 public class BookingDetail {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "booking_detail_id")
+    private Integer bookingDetailId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "booking_id", nullable = false)
     private Booking booking;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "showtime_id", nullable = false)
-    private Showtime showtime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seat_id", nullable = false)

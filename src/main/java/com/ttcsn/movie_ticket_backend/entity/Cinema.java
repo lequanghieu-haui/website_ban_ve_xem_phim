@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Table(name = "cinemas")
@@ -18,19 +17,21 @@ import java.util.UUID;
 public class Cinema {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cinema_id")
+    private Integer cinemaId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 255)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 255)
     private String address;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String city;
 
-    private String hotline;
+    @Column(name = "phone_number", length = 15)
+    private String phoneNumber;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
